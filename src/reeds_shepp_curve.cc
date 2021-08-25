@@ -92,56 +92,231 @@ void ReedsSheppCurve::path_3(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
-  theta = ModTheta(theta);
-  __polar_point = CartesianToPolar(x + sin(theta), y - 1 - cos(theta));
-  if (__polar_point.polar_r * __polar_point.polar_r > 4){
-    double u = sqrt(__polar_point.polar_r * __polar_point.polar_r - 4);
-    double t = ModTheta(__polar_point.polar_theta + atan2(2, u));
-    double v = ModTheta(t - theta);
-
+  double xi = x - sin(theta);
+  double eta = y - 1 + cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+  if (__polar_point.polar_r <= 4){
+    double A = acos(__polar_point.polar_r / 4);
+    double t = ModTheta(theta + M_PI_2 + A);
+    double u = ModTheta(M_PI - 2 * A);
+    double v = ModTheta(theta - t - u);
+    
     __path.emplace_back(Create(t, LEFT, FORWARD));
-    __path.emplace_back(Create(u, STRAIGHT, FORWARD));
-    __path.emplace_back(Create(v, RIGHT, FORWARD));
+    __path.emplace_back(Create(u, RIGHT, BACKWARD));
+    __path.emplace_back(Create(v, LEFT, FORWARD));
     paths_.emplace_back(__path);
   }
 }
 
-util::Points ReedsSheppCurve::path_4(double x, double y, double theta) {
-  return util::Points();
+void ReedsSheppCurve::path_4(double x, double y, double theta) {
+  std::vector<Trajectory> __path;
+  PolarPoint __polar_point{};
+  theta = deg2rad(theta);
+  double xi = x - sin(theta);
+  double eta = y - 1 + cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+  if (__polar_point.polar_r <= 4){
+    double A = acos(__polar_point.polar_r / 4);
+    double t = ModTheta(theta + M_PI_2 + A);
+    double u = ModTheta(M_PI - 2 * A);
+    double v = ModTheta(t + u - theta);
+
+    __path.emplace_back(Create(t, LEFT, FORWARD));
+    __path.emplace_back(Create(u, RIGHT, BACKWARD));
+    __path.emplace_back(Create(v, LEFT, BACKWARD));
+    paths_.emplace_back(__path);
+  }
 }
 
-util::Points ReedsSheppCurve::path_5(double x, double y, double theta) {
-  return util::Points();
+void ReedsSheppCurve::path_5(double x, double y, double theta) {
+  std::vector<Trajectory> __path;
+  PolarPoint __polar_point{};
+  theta = deg2rad(theta);
+  double xi = x - sin(theta);
+  double eta = y - 1 + cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+  if (__polar_point.polar_r <= 4){
+    double u = acos(1 - __polar_point.polar_r * __polar_point.polar_r / 8);
+    double A = asin(2 * sin(u) / __polar_point.polar_r);
+    double t = ModTheta(theta + M_PI_2 - A);
+    double v = ModTheta(t - u - theta);
+
+    __path.emplace_back(Create(t, LEFT, FORWARD));
+    __path.emplace_back(Create(u, RIGHT, FORWARD));
+    __path.emplace_back(Create(v, LEFT, BACKWARD));
+    paths_.emplace_back(__path);
+  }
 }
 
-util::Points ReedsSheppCurve::path_6(double x, double y, double theta) {
-  return util::Points();
+void ReedsSheppCurve::path_6(double x, double y, double theta) {
+  std::vector<Trajectory> __path;
+  PolarPoint __polar_point{};
+  theta = deg2rad(theta);
+  double xi = x + sin(theta);
+  double eta = y - 1 - cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+  double A, t, u, v;
+  if (__polar_point.polar_r <= 4){
+    if (__polar_point.polar_r <= 2){
+      A = acos((__polar_point.polar_r + 2) / 4);
+      t = ModTheta(theta + M_PI_2 + A);
+      u = ModTheta(A);
+      v = ModTheta(theta - t + 2 * u);
+    }else{
+      A = acos((__polar_point.polar_r - 2) / 4);
+      t = ModTheta(theta + M_PI_2 - A);
+      u = ModTheta(M_PI - A);
+      v = ModTheta(theta - t + 2 * u);
+    }
+
+    __path.emplace_back(Create(t, LEFT, FORWARD));
+    __path.emplace_back(Create(u, RIGHT, FORWARD));
+    __path.emplace_back(Create(u, LEFT, BACKWARD));
+    __path.emplace_back(Create(v, RIGHT, FORWARD));
+    paths_.emplace_back(__path);
+  } 
+} 
+void ReedsSheppCurve::path_7(double x, double y, double theta) {
+  std::vector<Trajectory> __path;
+  PolarPoint __polar_point{};
+  theta = deg2rad(theta);
+  
+  double xi = x + sin(theta);
+  double eta = y - 1 - cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+  double u1 = (20 - __polar_point.polar_r * __polar_point.polar_r) / 16;
+
+  if(__polar_point.polar_r <= 6 && 0 <= u1 <= 1){
+    double u = acos(u1);
+    double A = asin(2 * sin(u) / __polar_point.polar_r);
+    double t = ModTheta(theta + M_PI_2 + A);
+    double v = ModTheta(t - theta);
+
+    __path.emplace_back(Create(t, LEFT, FORWARD));
+    __path.emplace_back(Create(u, RIGHT, BACKWARD));
+    __path.emplace_back(Create(u, LEFT, BACKWARD));
+    __path.emplace_back(Create(u, RIGHT, FORWARD));
+    paths_.emplace_back(__path);
+  }
 }
 
-util::Points ReedsSheppCurve::path_7(double x, double y, double theta) {
-  return util::Points();
+void ReedsSheppCurve::path_8(double x, double y, double theta) {
+  std::vector<Trajectory> __path;
+  PolarPoint __polar_point{};
+  theta = deg2rad(theta);
+  
+  double xi = x - sin(theta);
+  double eta = y - 1 + cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+  if (__polar_point.polar_r >= 2){
+    double u = sqrt(__polar_point.polar_r * __polar_point.polar_r - 4) - 2;
+    double A = atan2(2, u + 2);
+    double t = ModTheta(theta + M_PI_2 + A);
+    double v = ModTheta(t - theta + M_PI_2);
+
+    __path.emplace_back(Create(t, LEFT, FORWARD));
+    __path.emplace_back(Create(M_PI_2, RIGHT, BACKWARD));
+    __path.emplace_back(Create(u, STRAIGHT, BACKWARD));
+    __path.emplace_back(Create(v, LEFT, BACKWARD));
+
+    paths_.emplace_back(__path);
+    
+  }
 }
 
-util::Points ReedsSheppCurve::path_8(double x, double y, double theta) {
-  return util::Points();
+void ReedsSheppCurve::path_9(double x, double y, double theta) {
+  std::vector<Trajectory> __path;
+  PolarPoint __polar_point{};
+  theta = deg2rad(theta);
+  
+  double xi = x - sin(theta);
+  double eta = y - 1 + cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+    
+  if (__polar_point.polar_r >= 2){
+    double u = sqrt(__polar_point.polar_r * __polar_point.polar_r - 4) - 2;
+    double A = atan2(u + 2, 2);
+    double t = ModTheta(theta + M_PI_2 - A);
+    double v = ModTheta(t - theta - M_PI_2);
+
+    __path.emplace_back(Create(t, LEFT, FORWARD));
+    __path.emplace_back(Create(u, STRAIGHT, FORWARD));
+    __path.emplace_back(Create(M_PI_2, RIGHT, FORWARD));
+    __path.emplace_back(Create(v, LEFT, BACKWARD));
+    paths_.emplace_back(__path);
+  }
 }
 
-util::Points ReedsSheppCurve::path_9(double x, double y, double theta) {
-  return util::Points();
+void ReedsSheppCurve::path_10(double x, double y, double theta) {
+  std::vector<Trajectory> __path;
+  PolarPoint __polar_point{};
+  theta = deg2rad(theta);
+  
+  double xi = x - sin(theta);
+  double eta = y - 1 + cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+    
+  if (__polar_point.polar_r >= 2){
+    double t = ModTheta(theta + M_PI_2);
+    double u = __polar_point.polar_r - 2;
+    double v = ModTheta(theta - t - M_PI_2);
+
+    __path.emplace_back(Create(t, LEFT, FORWARD));
+    __path.emplace_back(Create(M_PI_2, RIGHT, BACKWARD));
+    __path.emplace_back(Create(u, STRAIGHT, BACKWARD));
+    __path.emplace_back(Create(v, RIGHT, BACKWARD));
+    paths_.emplace_back(__path);
+  }
 }
 
-util::Points ReedsSheppCurve::path_10(double x, double y, double theta) {
-  return util::Points();
+void ReedsSheppCurve::path_11(double x, double y, double theta) {
+  
+  std::vector<Trajectory> __path;
+  PolarPoint __polar_point{};
+  theta = deg2rad(theta);
+  
+  double xi = x + sin(theta);
+  double eta = y - 1 - cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+    
+  if (__polar_point.polar_r >= 2){
+    double t = ModTheta(theta);
+    double u = __polar_point.polar_r - 2;
+    double v = ModTheta(theta - t - M_PI_2);
+
+    __path.emplace_back(Create(t, LEFT, FORWARD));
+    __path.emplace_back(Create(u, STRAIGHT, FORWARD));
+    __path.emplace_back(Create(M_PI_2, LEFT, FORWARD));
+    __path.emplace_back(Create(v, RIGHT, BACKWARD));
+    paths_.emplace_back(__path);
+  }
 }
 
-util::Points ReedsSheppCurve::path_11(double x, double y, double theta) {
-  return util::Points();
-}
+void ReedsSheppCurve::path_12(double x, double y, double theta) {
+  
+  std::vector<Trajectory> __path;
+  PolarPoint __polar_point{};
+  theta = deg2rad(theta);
+  
+  double xi = x + sin(theta);
+  double eta = y - 1 - cos(theta);
+  __polar_point = CartesianToPolar(xi, eta);
+    
+  if (__polar_point.polar_r >= 4){
+    double u = sqrt(__polar_point.polar_r * __polar_point.polar_r - 4) - 4;
+    double A = atan2(2, u + 4);
+    double t = ModTheta(theta + M_PI_2 + A);
+    double v = ModTheta(t - theta);
 
-util::Points ReedsSheppCurve::path_12(double x, double y, double theta) {
-  return util::Points();
+    __path.emplace_back(Create(t, LEFT, FORWARD));
+    __path.emplace_back(Create(M_PI_2, RIGHT, FORWARD));
+    __path.emplace_back(Create(u, STRAIGHT, BACKWARD)); 
+    __path.emplace_back(Create(u, STRAIGHT, BACKWARD));
+    __path.emplace_back(Create(v, RIGHT, FORWARD));
+    paths_.emplace_back(__path);
+  }
+  
 }
-
 
 
 }

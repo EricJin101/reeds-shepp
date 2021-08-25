@@ -24,23 +24,23 @@ public:
 
   void path_3(double x, double y, double theta);
 
-  util::Points path_4(double x, double y, double theta);
+  void path_4(double x, double y, double theta);
 
-  util::Points path_5(double x, double y, double theta);
+  void path_5(double x, double y, double theta);
 
-  util::Points path_6(double x, double y, double theta);
+  void path_6(double x, double y, double theta);
 
-  util::Points path_7(double x, double y, double theta);
+  void path_7(double x, double y, double theta);
 
-  util::Points path_8(double x, double y, double theta);
+  void path_8(double x, double y, double theta);
 
-  util::Points path_9(double x, double y, double theta);
+  void path_9(double x, double y, double theta);
 
-  util::Points path_10(double x, double y, double theta);
+  void path_10(double x, double y, double theta);
 
-  util::Points path_11(double x, double y, double theta);
+  void path_11(double x, double y, double theta);
 
-  util::Points path_12(double x, double y, double theta);
+  void path_12(double x, double y, double theta);
 
 
 protected:
