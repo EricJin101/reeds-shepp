@@ -18,29 +18,20 @@ public:
   double deg2rad(double deg);
 
 
-  void path_1(double x, double y, double theta);
-
-  void path_2(double x, double y, double theta);
-
-  void path_3(double x, double y, double theta);
-
-  void path_4(double x, double y, double theta);
-
-  void path_5(double x, double y, double theta);
-
-  void path_6(double x, double y, double theta);
-
-  void path_7(double x, double y, double theta);
-
-  void path_8(double x, double y, double theta);
-
-  void path_9(double x, double y, double theta);
-
-  void path_10(double x, double y, double theta);
-
-  void path_11(double x, double y, double theta);
-
-  void path_12(double x, double y, double theta);
+  SingleTrajectory path_1(double x, double y, double theta);
+  SingleTrajectory path_2(double x, double y, double theta);
+  SingleTrajectory path_3(double x, double y, double theta);
+  SingleTrajectory path_4(double x, double y, double theta);
+  SingleTrajectory path_5(double x, double y, double theta);
+  SingleTrajectory path_6(double x, double y, double theta);
+  SingleTrajectory path_7(double x, double y, double theta);
+  SingleTrajectory path_8(double x, double y, double theta);
+  SingleTrajectory path_9(double x, double y, double theta);
+  SingleTrajectory path_10(double x, double y, double theta);
+  SingleTrajectory path_11(double x, double y, double theta);
+  SingleTrajectory path_12(double x, double y, double theta);
+  SingleTrajectory time_flipping(double x, double y, double theta);
+  SingleTrajectory reflecting(double x, double y, double theta);
 
 
 protected:
@@ -61,6 +52,16 @@ protected:
       _traj.gear = static_cast<GEAR>(-gear);
       return _traj;
     }
+  }
+
+  Trajectory ReverseGear(Trajectory _traj){
+    _traj.gear = static_cast<GEAR>(-_traj.gear);
+    return _traj;
+  }
+
+  Trajectory ReverseSteering(Trajectory _traj){
+    _traj.steering = static_cast<STEERING >(-_traj.steering);
+    return _traj;
   }
 
   void record_path(){

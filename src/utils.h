@@ -35,5 +35,6 @@ public:
   double length;
 };
 typedef std::vector<Point> Points;
+typedef std::vector<Trajectory> SingleTrajectory;
 
 }

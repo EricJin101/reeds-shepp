@@ -13,8 +13,8 @@ double ReedsSheppCurve::deg2rad(double deg) {
 }
 
 void ReedsSheppCurve::GeneratePaths(Point point){
-//  path_1(point.x, point.y, point.theta);
-  path_2(point.x, point.y, point.theta);
+  paths_.emplace_back(path_1(point.x, point.y, point.theta));
+  paths_.emplace_back(path_2(point.x, point.y, point.theta));
   record_path();
   std::cout << "try";
 }
@@ -54,11 +54,11 @@ double ReedsSheppCurve::ModTheta(double theta) {
   return theta;
 }
 
-void ReedsSheppCurve::path_1(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_1(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
-  std::cout << "thata: " <<theta<< std::endl;
+  std::cout << "theta: " <<theta<< std::endl;
   double v = ModTheta(__polar_point.polar_theta);
   __polar_point = CartesianToPolar(x - sin(theta), y - 1 + cos(theta));
   std::cout<< "u: "<< __polar_point.polar_r<< " t: "<<__polar_point.polar_theta<<std::endl;
@@ -67,10 +67,10 @@ void ReedsSheppCurve::path_1(double x, double y, double theta) {
   __path.emplace_back(Create(__polar_point.polar_r, STRAIGHT, FORWARD));
   __path.emplace_back(Create(v, LEFT, FORWARD));
 
-  paths_.emplace_back(__path);
+  return __path;
 }
 
-void ReedsSheppCurve::path_2(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_2(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
@@ -84,11 +84,11 @@ void ReedsSheppCurve::path_2(double x, double y, double theta) {
     __path.emplace_back(Create(t, LEFT, FORWARD));
     __path.emplace_back(Create(u, STRAIGHT, FORWARD));
     __path.emplace_back(Create(v, RIGHT, FORWARD));
-    paths_.emplace_back(__path);
   }
+  return __path;
 }
 
-void ReedsSheppCurve::path_3(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_3(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
@@ -104,11 +104,11 @@ void ReedsSheppCurve::path_3(double x, double y, double theta) {
     __path.emplace_back(Create(t, LEFT, FORWARD));
     __path.emplace_back(Create(u, RIGHT, BACKWARD));
     __path.emplace_back(Create(v, LEFT, FORWARD));
-    paths_.emplace_back(__path);
   }
+  return __path;
 }
 
-void ReedsSheppCurve::path_4(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_4(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
@@ -124,11 +124,11 @@ void ReedsSheppCurve::path_4(double x, double y, double theta) {
     __path.emplace_back(Create(t, LEFT, FORWARD));
     __path.emplace_back(Create(u, RIGHT, BACKWARD));
     __path.emplace_back(Create(v, LEFT, BACKWARD));
-    paths_.emplace_back(__path);
   }
+  return __path;
 }
 
-void ReedsSheppCurve::path_5(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_5(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
@@ -144,11 +144,11 @@ void ReedsSheppCurve::path_5(double x, double y, double theta) {
     __path.emplace_back(Create(t, LEFT, FORWARD));
     __path.emplace_back(Create(u, RIGHT, FORWARD));
     __path.emplace_back(Create(v, LEFT, BACKWARD));
-    paths_.emplace_back(__path);
   }
+  return __path;
 }
 
-void ReedsSheppCurve::path_6(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_6(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
@@ -173,10 +173,10 @@ void ReedsSheppCurve::path_6(double x, double y, double theta) {
     __path.emplace_back(Create(u, RIGHT, FORWARD));
     __path.emplace_back(Create(u, LEFT, BACKWARD));
     __path.emplace_back(Create(v, RIGHT, FORWARD));
-    paths_.emplace_back(__path);
-  } 
+  }
+  return __path;
 } 
-void ReedsSheppCurve::path_7(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_7(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
@@ -196,11 +196,11 @@ void ReedsSheppCurve::path_7(double x, double y, double theta) {
     __path.emplace_back(Create(u, RIGHT, BACKWARD));
     __path.emplace_back(Create(u, LEFT, BACKWARD));
     __path.emplace_back(Create(u, RIGHT, FORWARD));
-    paths_.emplace_back(__path);
   }
+  return __path;
 }
 
-void ReedsSheppCurve::path_8(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_8(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
@@ -218,13 +218,11 @@ void ReedsSheppCurve::path_8(double x, double y, double theta) {
     __path.emplace_back(Create(M_PI_2, RIGHT, BACKWARD));
     __path.emplace_back(Create(u, STRAIGHT, BACKWARD));
     __path.emplace_back(Create(v, LEFT, BACKWARD));
-
-    paths_.emplace_back(__path);
-    
   }
+  return __path;
 }
 
-void ReedsSheppCurve::path_9(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_9(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
@@ -243,11 +241,11 @@ void ReedsSheppCurve::path_9(double x, double y, double theta) {
     __path.emplace_back(Create(u, STRAIGHT, FORWARD));
     __path.emplace_back(Create(M_PI_2, RIGHT, FORWARD));
     __path.emplace_back(Create(v, LEFT, BACKWARD));
-    paths_.emplace_back(__path);
   }
+  return __path;
 }
 
-void ReedsSheppCurve::path_10(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_10(double x, double y, double theta) {
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
   theta = deg2rad(theta);
@@ -265,11 +263,11 @@ void ReedsSheppCurve::path_10(double x, double y, double theta) {
     __path.emplace_back(Create(M_PI_2, RIGHT, BACKWARD));
     __path.emplace_back(Create(u, STRAIGHT, BACKWARD));
     __path.emplace_back(Create(v, RIGHT, BACKWARD));
-    paths_.emplace_back(__path);
   }
+  return __path;
 }
 
-void ReedsSheppCurve::path_11(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_11(double x, double y, double theta) {
   
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
@@ -288,11 +286,11 @@ void ReedsSheppCurve::path_11(double x, double y, double theta) {
     __path.emplace_back(Create(u, STRAIGHT, FORWARD));
     __path.emplace_back(Create(M_PI_2, LEFT, FORWARD));
     __path.emplace_back(Create(v, RIGHT, BACKWARD));
-    paths_.emplace_back(__path);
   }
+  return __path;
 }
 
-void ReedsSheppCurve::path_12(double x, double y, double theta) {
+SingleTrajectory ReedsSheppCurve::path_12(double x, double y, double theta) {
   
   std::vector<Trajectory> __path;
   PolarPoint __polar_point{};
@@ -313,9 +311,17 @@ void ReedsSheppCurve::path_12(double x, double y, double theta) {
     __path.emplace_back(Create(u, STRAIGHT, BACKWARD)); 
     __path.emplace_back(Create(u, STRAIGHT, BACKWARD));
     __path.emplace_back(Create(v, RIGHT, FORWARD));
-    paths_.emplace_back(__path);
   }
+  return __path;
   
+}
+
+std::vector<Trajectory> ReedsSheppCurve::time_flipping(double x, double y, double theta) {
+  return std::vector<Trajectory>();
+}
+
+std::vector<Trajectory> ReedsSheppCurve::reflecting(double x, double y, double theta) {
+  return std::vector<Trajectory>();
 }
 
 
